@@ -1,36 +1,44 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import TextField from "@mui/material/TextField";
 
+import senai from "../assets/logo_senai.png";
+
 function Login() {
   //Falta implementar a lógica do login, aqui é apenas o layout visual.
   //Atenção ao axios, Configs do TextField (onchange e values) e o useState
 
+
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <Box display="flex" flexDirection="column" alignItems="center">
+    <Container component="main" maxWidth="xs" >
+      <Box  sx ={{display:"flex", flexDirection:"column" ,alignItems:"center" , justifyContent:"space-evenly"}}>
+        <Typography component="p" sx ={{marginTop:"17px"}}>Página Login</Typography>
 
-        <Typography component="h1" variant="h5">
-          PROJETO BASE - Login
-        </Typography>
+        <img style={{ width: "200px", height: "51px" , marginTop:"50px"}} src={senai} />
 
-        <Box component="form" onSubmit={() => {console.log('Ainda não faz nada')}} noValidate>
+        <Box 
+          component="form"
+          onSubmit={() => {
+            console.log("Ainda não faz nada");
+          }}
+          noValidate
+        >
+          <Typography sx ={{marginTop:"40px"}} component="h3" textAlign="center">Seja bem-vindo(a). Faça o login para acessar a Agenda Senai ou cadastre-se como novo usuário.</Typography>
           <TextField
+          sx ={{marginTop:"15px"}}
             margin="normal"
             required
             fullWidth
-            label="CPF"
-            type="number"
+            label="Usuário (CPF)"
             name="cpf"
             id="cpf"
           />
           <TextField
+          sx ={{marginTop:"15px"}}
             margin="normal"
             required
             fullWidth
@@ -40,12 +48,13 @@ function Login() {
             id="password"
             autoComplete="current-password"
           />
-          <Button type="submit" fullWidth variant="contained">
+          <Button sx ={{marginTop:"15px"}} type="submit" fullWidth variant="contained">
             Login
           </Button>
-          <Button fullWidth variant="contained">
+          <Button sx ={{marginTop:"15px"}} fullWidth variant="contained">
             <Link to="/cadastro">Cadastro</Link>
           </Button>
+          
         </Box>
       </Box>
     </Container>
