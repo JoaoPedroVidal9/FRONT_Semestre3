@@ -1,62 +1,170 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import * as React from "react";
+import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import api from "../axios/axios"
 
+import caras from '../assets/cara.png'
+import logo from '../assets/senai_logo02.jpg'
 import senai from "../assets/logo_senai.png";
 
 function Login() {
-  //Falta implementar a lógica do login, aqui é apenas o layout visual.
-  //Atenção ao axios, Configs do TextField (onchange e values) e o useState
+  const [user, setUser] = useState({
+    cpf: "",
+    password: "",
+  });
+
+  const color = '#ff0000'
+
+  const navigate = useNavigate();
+
+  const onChange = (event) => {
+    const { name, value } = event.target;
+    setUser({ ...user, [name]: value });
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    login();
+  };
+
+  async function login() {
+    await api.postLogin(user).then(
+      (response) => {
+        alert(response.data.message)
+        localStorage.setItem('authenticated', true);
+        navigate('salas/')
+      },
+      (error) => {
+        console.log(error)
+        alert(error.response.data.error)
+      }
+    )
+  }
 
 
   return (
-    <Container component="main" maxWidth="xs" >
-      <Box  sx ={{display:"flex", flexDirection:"column" ,alignItems:"center" , justifyContent:"space-evenly"}}>
-        <Typography component="p" sx ={{marginTop:"17px"}}>Página Login</Typography>
+    <Container component="main" maxWidth="xl" style={{ display: 'flex', padding: "0", margin: "0" }} >
+      <img
+        src={logo}
+        style={{
+          height: "100vh",
+          width: "33%",
+        }}
+      ></img>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "space-evenly",
+          padding: "3%",
+          width: '33%'
+        }}
+      >
 
-        <img style={{ width: "200px", height: "51px" , marginTop:"50px"}} src={senai} />
-
-        <Box 
-          component="form"
-          onSubmit={() => {
-            console.log("Ainda não faz nada");
+        <img
+          style={{
+            width: "300px",
+            height: "75px"
           }}
+          src={senai} />
+
+        <Typography
+          sx={{ marginTop: "40px", fontSize: '26px', }}
+          component="h1"
+          textAlign="center">
+          Seja bem-vindo(a). Faça o login para acessar a Agenda Senai ou cadastre-se como novo usuário.
+        </Typography>
+
+        <Box
+          component="form"
+          onSubmit={handleSubmit}
           noValidate
+          sx={{ width: "100%", display:"flex", flexDirection:"column" }}
         >
-          <Typography sx ={{marginTop:"40px"}} component="h3" textAlign="center">Seja bem-vindo(a). Faça o login para acessar a Agenda Senai ou cadastre-se como novo usuário.</Typography>
+
+          <Typography
+            sx={{ marginTop: "15px", fontSize:"20px" }}
+          >Usuário</Typography>
           <TextField
-          sx ={{marginTop:"15px"}}
-            margin="normal"
             required
             fullWidth
-            label="Usuário (CPF)"
+            margin="normal"
+            label="Digite seu CPF"
             name="cpf"
             id="cpf"
+            value={user.cpf}
+            onChange={onChange}
+            variant="standard"
+            slotProps={{
+              input: {
+                disableUnderline: true,
+              },
+            }}
+            sx={{
+              paddingBottom: "10px", marginTop: "15px", border: "1px solid black", borderRadius: '15px',
+              '.MuiInputLabel-root': {
+                paddingLeft: "5px"
+              }
+            }}  
           />
+
+          <Typography
+            sx={{ marginTop: "15px", fontSize:"20px" }}
+          >Senha</Typography>
           <TextField
-          sx ={{marginTop:"15px"}}
-            margin="normal"
             required
             fullWidth
-            label="Senha"
-            type="password"
+            margin="normal"
+            label="Digite sua senha"
             name="password"
             id="password"
-            autoComplete="current-password"
+            value={user.password}
+            onChange={onChange}
+            variant="standard"
+            slotProps={{
+              input: {
+                disableUnderline: true,
+              },
+            }}
+            sx={{
+              paddingBottom: "10px", marginTop: "15px", border: "1px solid black", borderRadius: '15px',
+              '.MuiInputLabel-root': {
+                paddingLeft: "5px"
+              }
+            }}  
           />
-          <Button sx ={{marginTop:"15px"}} type="submit" fullWidth variant="contained">
-            Login
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ width:"90%", marginTop: "15px", backgroundColor: "#215299", alignSelf:"center" }}
+          >
+            Entrar
           </Button>
-          <Button sx ={{marginTop:"15px"}} fullWidth variant="contained">
-            <Link to="/cadastro">Cadastro</Link>
-          </Button>
-          
+
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <p style={{ margin: '5px' }}>Não possui conta? </p>
+            <Link
+              to='/cadastro'
+              sx={{ margin: '5px', marginTop: "15px" }}
+            > Cadastre-se </Link>
+          </div>
+
         </Box>
       </Box>
+      <img
+        src={caras}
+        style={{
+          height: "100vh",
+          width: "33%"
+        }}
+      ></img>
     </Container>
   );
 }
