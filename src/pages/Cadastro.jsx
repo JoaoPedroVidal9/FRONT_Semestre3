@@ -38,7 +38,7 @@ function Cadastro() {
       (response) => {
         alert(response.data.message)
         localStorage.setItem('authenticated', true);
-        navigate('salas/')
+        navigate('/salas')
       },
       (error) => {
         console.log(error)
