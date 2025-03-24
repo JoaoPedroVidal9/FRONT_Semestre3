@@ -54,8 +54,13 @@ function listRooms() {
   return (
     <div>
       {rooms.lenght === 0 ?(<h1>Carregando Salas</h1>):
-    <div>
-        <h5>Lista de Salas</h5>
+    <div style={{
+      display:'flex',
+      flexDirection:"column",
+      justifyContent:"center",
+      alignItems:"center"
+    }}>
+        <h1>Lista de Salas</h1>
         <TableContainer component={Paper} style={{margin:"2px"}}>
           <Table size="small">
             <TableHead style={{backgroundColor: "brown", borderStyle:"solid"}}>

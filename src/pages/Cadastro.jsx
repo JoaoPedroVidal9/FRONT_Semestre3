@@ -8,9 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import api from "../axios/axios"
 
-import caras from '../assets/cara.png'
 import logo from '../assets/senai_logo02.jpg'
-import senai from "../assets/logo_senai.png";
 
 function Cadastro() {
   const [user, setUser] = useState({
@@ -50,32 +48,6 @@ function Cadastro() {
 
   return (
     <Container component="main" maxWidth="xl" style={{ display: 'flex', padding: "0", margin: "0" }} >
-      <img
-        src={logo}
-        style={{
-          height: "100vh",
-          width: "33%",
-
-        }}
-      ></img>
-
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "space-evenly",
-          padding: "3%",
-          width: '33%'
-        }}
-      >
-
-        <img
-          style={{
-            width: "300px",
-            height: "75px"
-          }}
-          src={senai} />
 
         <Box
           component="form"
@@ -223,13 +195,7 @@ function Cadastro() {
           </div>
         </Box>
       </Box>
-      <img
-        src={caras}
-        style={{
-          height: "100vh",
-          width: "33%"
-        }}
-      ></img>
+
     </Container>
   );
 }

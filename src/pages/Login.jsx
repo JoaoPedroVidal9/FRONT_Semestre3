@@ -8,17 +8,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import api from "../axios/axios"
 
-import caras from '../assets/cara.png'
 import logo from '../assets/senai_logo02.jpg'
-import senai from "../assets/logo_senai.png";
 
 function Login() {
   const [user, setUser] = useState({
     cpf: "",
     password: "",
   });
-
-  const color = '#ff0000'
 
   const navigate = useNavigate();
 
@@ -49,13 +45,6 @@ function Login() {
 
   return (
     <Container component="main" maxWidth="xl" style={{ display: 'flex', padding: "0", margin: "0" }} >
-      <img
-        src={logo}
-        style={{
-          height: "100vh",
-          width: "33%",
-        }}
-      ></img>
       <Box
         sx={{
           display: "flex",
