@@ -53,6 +53,9 @@ function Cadastro() {
           component="form"
           onSubmit={handleSubmit}
           noValidate
+          sx={{
+            padding:"3%"
+          }}
         >
 
           <Typography
@@ -194,9 +197,8 @@ function Cadastro() {
             </Button>
           </div>
         </Box>
-      </Box>
+      </Container>
 
-    </Container>
   );
 }
 

@@ -7,8 +7,7 @@ import Typography from "@mui/material/Typography";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import api from "../axios/axios"
-
-import logo from '../assets/senai_logo02.jpg'
+import senai from '../assets/logo_senai.png'
 
 function Login() {
   const [user, setUser] = useState({
@@ -51,8 +50,7 @@ function Login() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "space-evenly",
-          padding: "3%",
-          width: '33%'
+          padding: "3%"
         }}
       >
 
@@ -147,13 +145,7 @@ function Login() {
 
         </Box>
       </Box>
-      <img
-        src={caras}
-        style={{
-          height: "100vh",
-          width: "33%"
-        }}
-      ></img>
+
     </Container>
   );
 }
