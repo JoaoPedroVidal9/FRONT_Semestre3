@@ -5,8 +5,8 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import { Link, useNavigate } from "react-router-dom";
-import IconButton from "@mui/material/IconButton";
 import { useState } from "react";
+import IconButton from "@mui/material/IconButton";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import api from "../axios/axios";
@@ -130,7 +130,7 @@ function Login() {
               justifyContent: "center",
               alignItems: "center",
               border: "1px solid black",
-
+              marginY:"15px",
               borderRadius: "15px",
             }}
           >
@@ -150,9 +150,21 @@ function Login() {
                   disableUnderline: true,
                 },
               }}
+              sx={{
+                margin:0,
+                paddingBottom:"10px",
+                ".MuiInputLabel-root": {
+                paddingLeft: "5px",
+              },
+              }}
             />
             <IconButton
-              sx={{width:"10px", height:"10px", paddingTop:"10px",paddingRight:"20px"}}
+              sx={{
+                width: "10px",
+                height: "10px",
+                paddingTop: "10px",
+                paddingRight: "20px",
+              }}
               onClick={() =>
                 setUser({ ...user, showPassword: !user.showPassword })
               }
