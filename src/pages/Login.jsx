@@ -31,6 +31,7 @@ function Login() {
     login();
   };
 
+    {/*Função pra trocar o texto para senha */}
   function isOn() {
     if (user.showPassword) {
       return "text";
