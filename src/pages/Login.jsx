@@ -202,7 +202,7 @@ function Login() {
             }}
           >
             <p style={{ margin: "5px" }}>Não possui conta? </p>
-            <Link to="/cadastro" sx={{ margin: "5px", marginTop: "15px" }}>
+            <Link to="/cadastro" style={{fontFamily:"sans-serif", textDecoration: 'none'}} sx={{margin: "5px", marginTop: "15px" }}>
               {" "}
               Cadastre-se{" "}
             </Link>
