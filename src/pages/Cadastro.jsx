@@ -97,6 +97,9 @@ function Cadastro() {
           onChange={onChange}
           variant="standard"
           slotProps={{
+            htmlInput:{
+              maxLength: 255
+            },
             input: {
               disableUnderline: true,
             },
@@ -123,6 +126,9 @@ function Cadastro() {
           onChange={onChange}
           variant="standard"
           slotProps={{
+            htmlInput:{
+              maxLength: 255
+            },
             input: {
               disableUnderline: true,
             },
@@ -138,16 +144,21 @@ function Cadastro() {
           }}
         />
 
-        <TextField
+<TextField
           required
           fullWidth
           margin="normal"
           label="Digite seu CPF"
           name="cpf"
           id="cpf"
+          type="number"
           value={user.cpf}
           onChange={onChange}
           variant="standard"
+          onInput={(e)=>{ 
+            e.target.value = Math.max(0, parseInt(e.target.value) ).toString().slice(0,11)
+        }}
+        min={0}
           slotProps={{
             input: {
               disableUnderline: true,
@@ -187,6 +198,9 @@ function Cadastro() {
             onChange={onChange}
             variant="standard"
             slotProps={{
+              htmlInput:{
+                maxLength: 50
+              },
               input: {
                 disableUnderline: true,
               },
@@ -237,6 +251,9 @@ function Cadastro() {
             onChange={onChange}
             variant="standard"
             slotProps={{
+              htmlInput:{
+                maxLength: 50
+              },
               input: {
                 disableUnderline: true,
               },

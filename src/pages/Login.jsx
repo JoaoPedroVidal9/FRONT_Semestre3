@@ -106,6 +106,9 @@ function Login() {
             onChange={onChange}
             variant="standard"
             slotProps={{
+              htmlInput:{
+                maxLength: 11
+              },
               input: {
                 disableUnderline: true,
               },
@@ -147,6 +150,9 @@ function Login() {
               onChange={onChange}
               variant="standard"
               slotProps={{
+                htmlInput:{
+                  maxLength: 50
+                },
                 input: {
                   disableUnderline: true,
                 },
