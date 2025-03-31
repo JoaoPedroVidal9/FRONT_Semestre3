@@ -1,24 +1,26 @@
+// Importação dos componentes react
 import { useState, useEffect } from "react";
-// Imports para criação de tabela
+// Importação dos componentes MUI
+import Paper from "@mui/material/Paper";
+// Importação para criação de tabela do MUI
 import Table from "@mui/material/Table";
 import TableContainer from "@mui/material/TableContainer";
-// TableHead é onde colocamos os titulos
 import TableHead from "@mui/material/TableHead";
-// TableBody é onde colocamos o conteúdo
 import TableBody from "@mui/material/TableBody";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
-import Paper from "@mui/material/Paper";
+// Importação da função da API
 import api from "../axios/axios";
-import { Button } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+// Importação de imagens
 import senai from "../assets/logo_senai.png";
+// Importação do componente personalizado BarraLateral
 import BarraLateral from "../components/BarraLateral";
 
 function listRooms() {
+  // Definição da constante dos dados da Sala
   const [rooms, setRooms] = useState([]);
-  const navigate = useNavigate();
 
+  // Função para executar a request da API
   async function getRooms() {
     // Chamada da Api
     await api.getSalas().then(
@@ -32,6 +34,7 @@ function listRooms() {
     );
   }
 
+  // Função para organizar os dados das salas em uma tabela
   const listRooms = rooms.map((sala) => {
     return (
       <TableRow
@@ -68,13 +71,17 @@ function listRooms() {
     );
   });
 
+  // Função para ativar a request ao carregar a página
   useEffect(() => {
     getRooms();
   }, []);
 
+  // Início da Definição Gráfica
   return (
     <div style={{ display: "flex", flexDirection: "row" }}>
-      <BarraLateral sx={{ width: "15%", Height: "100%" }} />
+      {/* Chamada da BarraLateral em flexDirection:'row' */}
+      <BarraLateral sx={{ width: "15%", Height: "100%" }} />]
+      {/* Prevenção de tabela vazia, substituida por mensagem */}
       {rooms.lenght === 0 ? (
         <h1>Carregando Salas</h1>
       ) : (
@@ -89,6 +96,7 @@ function listRooms() {
             paddingLeft: "150px",
           }}
         >
+          {/* Logo do Senai */}
           <img
             style={{
               width: "300px",
@@ -97,6 +105,7 @@ function listRooms() {
             src={senai}
           />
 
+          {/* Título e tabela listando as salas */}
           <h1>Lista de Salas</h1>
           <TableContainer component={Paper} style={{ margin: "2px" }}>
             <Table size="small">
@@ -119,6 +128,7 @@ function listRooms() {
                   </TableCell>
                 </TableRow>
               </TableHead>
+              {/* Chamada da função de Listagem das salas na tabela */}
               <TableBody>{listRooms}</TableBody>
             </Table>
           </TableContainer>
