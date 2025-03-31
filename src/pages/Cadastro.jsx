@@ -81,7 +81,11 @@ function Cadastro() {
         onSubmit={handleSubmit}
         noValidate
         sx={{
+          display:"flex",
+          flexDirection:"column",
+          alignItems:"center",
           padding: "3%",
+
         }}
       >
         {/* Logo do Senai */}
@@ -206,6 +210,7 @@ function Cadastro() {
             border: "1px solid black",
             marginY: "15px",
             borderRadius: "15px",
+            width:"100%"
           }}
         >
           {/* Input para a senha */}
@@ -263,6 +268,7 @@ function Cadastro() {
             border: "1px solid black",
             marginY: "15px",
             borderRadius: "15px",
+            width:"100%"
           }}
         >
           {/* Input para a senha */}
@@ -315,6 +321,7 @@ function Cadastro() {
           style={{
             display: "flex",
             justifyContent: "space-between",
+            width:"100%"
           }}
         >
 
