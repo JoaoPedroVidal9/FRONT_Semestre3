@@ -1,18 +1,25 @@
+// Importação dos componentes react
 import * as React from "react";
+import { useState } from "react";
+// Importação dos componentes MUI
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
-import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
-import api from "../axios/axios";
 import IconButton from "@mui/material/IconButton";
+// Importação dos componentes MUI icons
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+// Importação dos componentes do Roteador
+import { Link, useNavigate } from "react-router-dom";
+// Importação da função da API
+import api from "../axios/axios";
+// Importação de imagens
 import senai from "../assets/logo_senai.png";
 
 function Cadastro() {
+  // Definição da constante dos dados do usuário
   const [user, setUser] = useState({
     cpf: "",
     name: "",
@@ -22,7 +29,7 @@ function Cadastro() {
     showPassword: false,
   });
 
-  {/*Função pra trocar o texto para senha */}
+  // Função para ativar a segurança da senha (showPassword)
   function isOn() {
     if (user.showPassword) {
       return "text";
@@ -31,18 +38,22 @@ function Cadastro() {
     }
   }
 
+  // Definição da função de navegação
   const navigate = useNavigate();
 
+  // Definição da função de sincronização entre input e dados do usuário
   const onChange = (event) => {
     const { name, value } = event.target;
     setUser({ ...user, [name]: value });
   };
 
+  // Função para lidar com a ação do submit
   const handleSubmit = (event) => {
     event.preventDefault();
     cadastro();
   };
 
+  // Função para executar a request da API
   async function cadastro() {
     await api.postCadastro(user).then(
       (response) => {
@@ -57,12 +68,14 @@ function Cadastro() {
     );
   }
 
+  // Início da Definição Gráfica
   return (
     <Container
       component="main"
       maxWidth="xl"
       style={{ display: "flex", padding: "0", margin: "0" }}
     >
+      {/* Caixa de formulário de cadastro */}
       <Box
         component="form"
         onSubmit={handleSubmit}
@@ -71,6 +84,7 @@ function Cadastro() {
           padding: "3%",
         }}
       >
+        {/* Logo do Senai */}
         <img
           style={{
             width: "300px",
@@ -78,6 +92,8 @@ function Cadastro() {
           }}
           src={senai}
         />
+
+        {/* Texto introdutório à página */}
         <Typography
           sx={{ marginTop: "40px", fontSize: "26px" }}
           component="h1"
@@ -86,6 +102,7 @@ function Cadastro() {
           Cadastre-se e usufrua de nossa plataforma.
         </Typography>
 
+        {/* Input para o Nome */}
         <TextField
           required
           fullWidth
@@ -97,8 +114,8 @@ function Cadastro() {
           onChange={onChange}
           variant="standard"
           slotProps={{
-            htmlInput:{
-              maxLength: 255
+            htmlInput: {
+              maxLength: 255,
             },
             input: {
               disableUnderline: true,
@@ -115,6 +132,7 @@ function Cadastro() {
           }}
         />
 
+        {/* Input para o E-mail */}
         <TextField
           required
           fullWidth
@@ -126,8 +144,8 @@ function Cadastro() {
           onChange={onChange}
           variant="standard"
           slotProps={{
-            htmlInput:{
-              maxLength: 255
+            htmlInput: {
+              maxLength: 255,
             },
             input: {
               disableUnderline: true,
@@ -144,7 +162,8 @@ function Cadastro() {
           }}
         />
 
-<TextField
+        {/* Input para o CPF */}
+        <TextField
           required
           fullWidth
           margin="normal"
@@ -155,10 +174,12 @@ function Cadastro() {
           value={user.cpf}
           onChange={onChange}
           variant="standard"
-          onInput={(e)=>{ 
-            e.target.value = Math.max(0, parseInt(e.target.value) ).toString().slice(0,11)
-        }}
-        min={0}
+          onInput={(e) => {
+            e.target.value = Math.max(0, parseInt(e.target.value))
+              .toString()
+              .slice(0, 11);
+          }}
+          min={0}
           slotProps={{
             input: {
               disableUnderline: true,
@@ -175,6 +196,7 @@ function Cadastro() {
           }}
         />
 
+        {/* Caixa para estilização do input da senha */}
         <Box
           sx={{
             display: "flex",
@@ -186,6 +208,7 @@ function Cadastro() {
             borderRadius: "15px",
           }}
         >
+          {/* Input para a senha */}
           <TextField
             required
             fullWidth
@@ -198,8 +221,8 @@ function Cadastro() {
             onChange={onChange}
             variant="standard"
             slotProps={{
-              htmlInput:{
-                maxLength: 50
+              htmlInput: {
+                maxLength: 50,
               },
               input: {
                 disableUnderline: true,
@@ -213,6 +236,8 @@ function Cadastro() {
               },
             }}
           />
+
+          {/* Icone de Olho */}
           <IconButton
             sx={{
               width: "10px",
@@ -228,6 +253,7 @@ function Cadastro() {
           </IconButton>
         </Box>
 
+        {/* Caixa para estilização do input da confirmação da senha */}
         <Box
           sx={{
             display: "flex",
@@ -239,6 +265,7 @@ function Cadastro() {
             borderRadius: "15px",
           }}
         >
+          {/* Input para a senha */}
           <TextField
             required
             fullWidth
@@ -251,8 +278,8 @@ function Cadastro() {
             onChange={onChange}
             variant="standard"
             slotProps={{
-              htmlInput:{
-                maxLength: 50
+              htmlInput: {
+                maxLength: 50,
               },
               input: {
                 disableUnderline: true,
@@ -266,6 +293,8 @@ function Cadastro() {
               },
             }}
           />
+
+          {/* Icone de Olho */}
           <IconButton
             sx={{
               width: "10px",
@@ -281,12 +310,15 @@ function Cadastro() {
           </IconButton>
         </Box>
 
+        {/* Div para organizar botões Horizontalmente */}
         <div
           style={{
             display: "flex",
             justifyContent: "space-between",
           }}
         >
+
+          {/* Botão de Retorno */}
           <Button
             component={Link}
             to="/"
@@ -302,6 +334,8 @@ function Cadastro() {
           >
             Voltar
           </Button>
+
+          {/* Botão de Cadastro */}
           <Button
             type="submit"
             fullWidth
