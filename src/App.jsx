@@ -5,6 +5,7 @@ import SalasLista from "./pages/SalasLista";
 import Login from "./pages/Login";
 import Cadastro from "./pages/Cadastro";
 import LayoutImagens from "./components/LayoutImagens";
+import ReservaSalas from "./pages/ReservaSalas"
 
 function App() {
   return (
@@ -31,6 +32,14 @@ function App() {
           element={
             <RotasProtegidas>
               <SalasLista />
+            </RotasProtegidas>
+          }
+        />
+        <Route
+          path="/reservar"
+          element={
+            <RotasProtegidas>
+              <ReservaSalas />
             </RotasProtegidas>
           }
         />

@@ -19,6 +19,10 @@ const BarraLateral = () => {
         navigate('/');
       }
 
+    function reserva(){
+      navigate('/reservar')
+    }
+
   return (
     <Box
       sx={{
@@ -34,7 +38,7 @@ const BarraLateral = () => {
             <ReorderIcon sx={{ width: 40, height: 40, color:"#000000" }} />
         </IconButton>
       <IconButton sx={{ backgroundColor: "#ff0002" }}>
-        <CalendarTodayIcon sx={{ width: 40, height: 40, color:"#ffffff" }} />
+        <CalendarTodayIcon sx={{ width: 40, height: 40, color:"#ffffff" }} onClick={reserva}/>
       </IconButton>
       <IconButton sx={{ backgroundColor: "#ff0002" }}>
         <HighlightOffIcon sx={{ width: 40, height: 40, color:"#ffffff" }} />

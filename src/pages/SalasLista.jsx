@@ -80,7 +80,7 @@ function listRooms() {
   return (
     <div style={{ display: "flex", flexDirection: "row" }}>
       {/* Chamada da BarraLateral em flexDirection:'row' */}
-      <BarraLateral sx={{ width: "15%", Height: "100%" }} />]
+      <BarraLateral sx={{ width: "15%", Height: "100%" }} />
       {/* Prevenção de tabela vazia, substituida por mensagem */}
       {rooms.lenght === 0 ? (
         <h1>Carregando Salas</h1>
