@@ -55,6 +55,7 @@ function Login() {
     await api.postLogin(user).then(
       (response) => {
         alert(response.data.message);
+        localStorage.setItem("authorization", response.data.token);
         localStorage.setItem("authenticated", true);
         navigate("salas/");
       },

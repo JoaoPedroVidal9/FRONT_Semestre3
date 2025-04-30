@@ -23,6 +23,10 @@ const BarraLateral = () => {
       navigate('/reservar')
     }
 
+    function salas(){
+      navigate('/salas')
+    }
+
   return (
     <Box
       sx={{
@@ -50,7 +54,7 @@ const BarraLateral = () => {
         <SettingsIcon sx={{ width: 40, height: 40, color:"#ffffff" }}/>
       </IconButton>
       <IconButton sx={{ backgroundColor: "#ff0002" }}>
-        <FormatListBulletedIcon sx={{ width: 40, height: 40, color:"#ffffff" }} />
+        <FormatListBulletedIcon sx={{ width: 40, height: 40, color:"#ffffff" }} onClick={salas}/>
       </IconButton>
 
       <IconButton sx={{ backgroundColor: "#ff0002", marginTop:"200%" }}>

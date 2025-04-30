@@ -79,146 +79,169 @@ function ReservaSalas() {
   }
 
   return (
-    <Container
-      component="main"
-      maxWidth="xl"
-      
-    >
-      <BarraLateral/>
-      <Box sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        minHeight: "100vh",
-        padding: 0,
-        margin: 0,
-      }}>
+    <Container component="main" maxWidth="xl">
+      <BarraLateral />
       <Box
-        component="form"
-        onSubmit={handleSubmit}
-        noValidate
         sx={{
           display: "flex",
-          flexDirection: "column",
+          justifyContent: "center",
           alignItems: "center",
-          padding: "3%",
+          minHeight: "100vh",
+          padding: 0,
+          margin: 0,
         }}
       >
-        {/* Logo do Senai */}
-        <img
-          style={{
-            width: "300px",
-            height: "75px",
+        <Box
+          component="form"
+          onSubmit={handleSubmit}
+          noValidate
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            padding: "1%",
           }}
-          src={senai}
-        />
-
-        <Typography
-          sx={{ marginTop: "40px", fontSize: "26px" }}
-          component="h1"
-          textAlign="center"
         >
-          Reserva de salas
-        </Typography>
+          {/* Logo do Senai */}
+          <img
+            style={{
+              width: "300px",
+            }}
+            src={senai}
+          />
 
-        <TextField
-          required
-          fullWidth
-          margin="normal"
-          label="Digite a data de inicio"
-          name="dateStart"
-          id="dateStart"
-          value={sala.dateStart}
-          onChange={onChange}
-          variant="standard"
-        />
-
-        {/* Input para o E-mail */}
-        <TextField
-          required
-          fullWidth
-          margin="normal"
-          label="Digite a data de fim"
-          name="dateEnd"
-          id="dateEnd"
-          value={sala.dateEnd}
-          onChange={onChange}
-          variant="standard"
-        />
-
-        <FormControl fullWidth margin="normal" variant="standard">
-          <InputLabel id="days-label">Selecione os dias da semana</InputLabel>
-          <Select
-            labelId="days-label"
-            id="days"
-            multiple
-            value={sala.days}
-            onChange={handleChangeDays}
-            renderValue={(selected) => selected.join(", ")}
+          <Typography
+            sx={{ marginTop: 1, fontSize: 20 }}
+            component="h1"
+            textAlign="center"
           >
-            {["Seg", "Ter", "Qua", "Qui", "Sex", "Sab"].map((day) => (
-              <MenuItem key={day} value={day}>
-                <Checkbox checked={sala.days.indexOf(day) > -1} />
-                <ListItemText primary={day} />
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+            Reserva de salas
+          </Typography>
 
-        <TextField
-          required
-          fullWidth
-          margin="normal"
-          label="Digite o usuario"
-          name="user"
-          id="user"
-          value={sala.user}
-          onChange={onChange}
-          variant="standard"
-        />
+          <TextField
+            required
+            fullWidth
+            margin="dense"
+            label="Selecione a data de inicio"
+            name="dateStart"
+            id="dateStart"
+            type="date"
+            value={sala.dateStart}
+            onChange={onChange}
+            variant="outlined"
+            slotProps={{ inputLabel: { shrink: true } }}
+            size="small"
+            sx={{ width: 500 }}
+          />
 
-        <TextField
-          required
-          fullWidth
-          margin="normal"
-          label="Digite o número da sala"
-          name="classroom"
-          id="clasroom"
-          value={sala.classroom}
-          onChange={onChange}
-          variant="standard"
-        />
-        <TextField
-          required
-          fullWidth
-          margin="normal"
-          label="Digite o horário de início"
-          name="timeStart"
-          id="timeStart"
-          value={sala.timeStart}
-          onChange={onChange}
-          variant="standard"
-        />
-        <TextField
-          required
-          fullWidth
-          margin="normal"
-          label="Digite o horário de fim"
-          name="timeEnd"
-          id="timeEnd"
-          value={sala.timeEnd}
-          onChange={onChange}
-          variant="standard"
-        />
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          sx={{ width: "40%", marginTop: "12px", backgroundColor: "gray" }}
-        >
-          Reservar Sala
-        </Button>
-      </Box>
+          <TextField
+            required
+            fullWidth
+            margin="dense"
+            label="Selecione a data de fim"
+            name="dateEnd"
+            id="dateEnd"
+            type="date"
+            value={sala.dateEnd}
+            onChange={onChange}
+            slotProps={{ inputLabel: { shrink: true } }}
+            size="small"
+            sx={{ width: 500 }}
+          />
+
+          <FormControl fullWidth variant="outlined" margin="dense">
+            <InputLabel id="days-label" shrink={true}>
+              Selecione os dias da semana
+            </InputLabel>
+
+            <Select
+              labelId="days-label"
+              id="days"
+              multiple
+              value={sala.days}
+              size="small"
+              label="Selecione os dias da semana"
+              onChange={handleChangeDays}
+              renderValue={(selected) =>
+                selected.length === 0 ? "" : selected.join(", ")
+              }
+              displayEmpty
+              sx={{ width: 500 }}
+            >
+              {["Seg", "Ter", "Qua", "Qui", "Sex", "Sab"].map((day) => (
+                <MenuItem key={day} value={day}>
+                  <Checkbox checked={sala.days.includes(day)} />
+                  <ListItemText primary={day} />
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
+          <TextField
+            required
+            fullWidth
+            margin="dense"
+            label="Digite o usuário"
+            name="user"
+            id="user"
+            value={sala.user}
+            size="small"
+            slotProps={{ inputLabel: { shrink: true } }}
+            onChange={onChange}
+            sx={{ width: 500 }}
+            
+          />
+
+          <TextField
+            required
+            fullWidth
+            margin="dense"
+            label="Digite o número da sala"
+            name="classroom"
+            id="clasroom"
+            size="small"
+            slotProps={{ inputLabel: { shrink: true } }}
+            value={sala.classroom}
+            onChange={onChange}
+            sx={{ width: 500 }}
+          />
+          <TextField
+            required
+            fullWidth
+            margin="dense"
+            label="Selecione o horário de início"
+            name="timeStart"
+            id="timeStart"
+            type="time"
+            size="small"
+            value={sala.timeStart}
+            onChange={onChange}
+            slotProps={{ inputLabel: { shrink: true } }}
+            sx={{ width: 500 }}
+          />
+          <TextField
+            required
+            fullWidth
+            margin="dense"
+            label="Selecione o horário de fim"
+            name="timeEnd"
+            id="timeEnd"
+            type="time"
+            size="small"
+            value={sala.timeEnd}
+            onChange={onChange}
+            slotProps={{ inputLabel: { shrink: true } }}
+            sx={{ width: 500 }}
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ width: "40%", marginTop: "12px", backgroundColor: "gray" }}
+          >
+            Reservar Sala
+          </Button>
+        </Box>
       </Box>
     </Container>
   );
