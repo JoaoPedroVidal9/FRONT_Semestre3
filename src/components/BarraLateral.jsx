@@ -28,6 +28,10 @@ const BarraLateral = () => {
     function salas(){
       navigate('/salas')
     }
+    
+    function disponibilidade(){
+      navigate('/disponibilidade')
+    }
 
   return (
     <Box
@@ -47,7 +51,7 @@ const BarraLateral = () => {
         <CalendarTodayIcon sx={{ width: 40, height: 40, color:"#ffffff" }} onClick={reserva}/>
       </IconButton>
       <IconButton sx={{ backgroundColor: "#ff0002" }}>
-        <HighlightOffIcon sx={{ width: 40, height: 40, color:"#ffffff" }} />
+        <HighlightOffIcon sx={{ width: 40, height: 40, color:"#ffffff" }} onClick={disponibilidade}/>
       </IconButton>
       <IconButton sx={{ backgroundColor: "#ff0002" }}>
         <GroupIcon sx={{ width: 40, height: 40, color:"#ffffff" }} />
