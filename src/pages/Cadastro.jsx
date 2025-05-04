@@ -59,6 +59,8 @@ function Cadastro() {
       (response) => {
         alert(response.data.message);
         localStorage.setItem("authenticated", true);
+        localStorage.setItem("authorization", response.data.token);
+        localStorage.setItem("id_usuario", user.cpf);
         navigate("/salas");
       },
       (error) => {

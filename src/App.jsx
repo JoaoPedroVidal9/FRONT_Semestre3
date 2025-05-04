@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Cadastro from "./pages/Cadastro";
 import LayoutImagens from "./components/LayoutImagens";
 import ReservaSalas from "./pages/ReservaSalas"
+import ConsultarDisponibilidade from "./pages/ConsultarDisponibilidade";
 
 function App() {
   return (
@@ -25,6 +26,15 @@ function App() {
             <LayoutImagens>
               <Cadastro />
             </LayoutImagens>
+          }
+        />
+
+        <Route
+          path="/disponibilidade"
+          element={
+            <RotasProtegidas>
+              <ConsultarDisponibilidade />
+            </RotasProtegidas>
           }
         />
         <Route

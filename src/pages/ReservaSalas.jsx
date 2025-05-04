@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
@@ -14,7 +14,6 @@ import InputLabel from "@mui/material/InputLabel";
 import api from "../axios/axios";
 import senai from "../assets/logo_senai.png";
 import BarraLateral from "../components/BarraLateral";
-import { Height } from "@mui/icons-material";
 
 function ReservaSalas() {
   const [sala, setSala] = useState({
@@ -26,6 +25,16 @@ function ReservaSalas() {
     timeStart: "",
     timeEnd: "",
   });
+
+  useEffect(() => {
+    const idUsuario = localStorage.getItem('id_usuario');
+    if (idUsuario) {
+      setSala(prevSala => ({
+        ...prevSala,
+        user: idUsuario
+      }));
+    }
+  }, [])
 
   const onChange = (event) => {
     const { name, value, checked } = event.target;
@@ -176,21 +185,6 @@ function ReservaSalas() {
               ))}
             </Select>
           </FormControl>
-
-          <TextField
-            required
-            fullWidth
-            margin="dense"
-            label="Digite o usuário"
-            name="user"
-            id="user"
-            value={sala.user}
-            size="small"
-            slotProps={{ inputLabel: { shrink: true } }}
-            onChange={onChange}
-            sx={{ width: 500 }}
-            
-          />
 
           <TextField
             required

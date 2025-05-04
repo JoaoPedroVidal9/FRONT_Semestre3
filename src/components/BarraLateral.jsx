@@ -16,6 +16,8 @@ const BarraLateral = () => {
 
     function logout(){
         localStorage.removeItem('authenticated');
+        localStorage.removeItem('authorization');
+        localStorage.removeItem('id_usuario');
         navigate('/');
       }
 

@@ -56,6 +56,7 @@ function Login() {
       (response) => {
         alert(response.data.message);
         localStorage.setItem("authorization", response.data.token);
+        localStorage.setItem("id_usuario", user.cpf);
         localStorage.setItem("authenticated", true);
         navigate("salas/");
       },
