@@ -14,7 +14,7 @@ function ConsultarDisponibilidade() {
   const [week, setWeek] = useState({
     weekStart: "",
     weekEnd: "",
-    id_sala: "",
+    classroomID: "",
   });
 
   const [openModal, setOpenModal] = useState(false);
@@ -115,8 +115,8 @@ function ConsultarDisponibilidade() {
             fullWidth
             margin="dense"
             label="Número da Sala"
-            name="id_sala"
-            value={week.id_sala}
+            name="classroomID"
+            value={week.classroomID}
             onChange={onChange}
             size="small"
             slotProps={{ inputLabel: { shrink: true } }}
