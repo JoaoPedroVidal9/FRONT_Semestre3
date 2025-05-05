@@ -81,7 +81,6 @@ function ReservaSalas() {
         alert(response.data.message);
       },
       (error) => {
-        console.log(error);
         alert(error.response.data.error);
       }
     );

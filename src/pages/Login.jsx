@@ -61,7 +61,6 @@ function Login() {
         navigate("salas/");
       },
       (error) => {
-        console.log(error);
         alert(error.response.data.error);
       }
     );

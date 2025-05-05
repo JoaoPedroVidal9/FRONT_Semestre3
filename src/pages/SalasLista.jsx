@@ -25,11 +25,10 @@ function listRooms() {
     // Chamada da Api
     await api.getSalas().then(
       (response) => {
-        console.log(response.data.classrooms);
         setRooms(response.data.classrooms);
       },
       (error) => {
-        console.log("Erro ", error);
+        alert(error.response.data.error)
       }
     );
   }

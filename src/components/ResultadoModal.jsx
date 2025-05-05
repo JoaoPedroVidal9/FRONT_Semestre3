@@ -20,7 +20,7 @@ const ResultadoModal = ({ open, handleClose, content }) => {
           </ul>
         </Box>
       ));
-    } catch (e) {
+    } catch (error) {
       return (
         <Typography variant="body2" color="error">
           {content}
@@ -44,8 +44,7 @@ const ResultadoModal = ({ open, handleClose, content }) => {
           transform: "translate(-50%, -50%)",
           width: 400,
           maxHeight: "70vh",
-          bgcolor: "background.paper",
-          border: "1px solid #ccc",
+          bgcolor:"white",
           boxShadow: 12,
           p: 3,
           borderRadius: 2,

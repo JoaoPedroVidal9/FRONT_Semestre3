@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography";
 import api from "../axios/axios";
 import senai from "../assets/logo_senai.png";
 import BarraLateral from "../components/BarraLateral";
-import ResultadoModal from "../components/ModalConsultarDisponibilidade"
+import ResultadoModal from "../components/ResultadoModal"
 
 function ConsultarDisponibilidade() {
   const [week, setWeek] = useState({
@@ -39,7 +39,6 @@ function ConsultarDisponibilidade() {
       setModalContent(response.data.available);
       handleOpenModal();
     } catch (error) {
-      console.log(error);
       setModalContent(error.response.data.error);
       handleOpenModal();
     }
