@@ -7,6 +7,7 @@ import Cadastro from "./pages/Cadastro";
 import LayoutImagens from "./components/LayoutImagens";
 import ReservaSalas from "./pages/ReservaSalas"
 import ConsultarDisponibilidade from "./pages/ConsultarDisponibilidade";
+import QuemSomos from "./pages/QuemSomos";
 
 function App() {
   return (
@@ -50,6 +51,14 @@ function App() {
           element={
             <RotasProtegidas>
               <ReservaSalas />
+            </RotasProtegidas>
+          }
+        />
+        <Route
+          path="/quemsomos"
+          element={
+            <RotasProtegidas>
+              <QuemSomos />
             </RotasProtegidas>
           }
         />

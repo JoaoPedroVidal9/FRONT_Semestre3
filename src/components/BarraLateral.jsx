@@ -6,7 +6,7 @@ import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import SettingsIcon from "@mui/icons-material/Settings";
 import PersonIcon from "@mui/icons-material/Person";
 import GroupIcon from "@mui/icons-material/Group";
-import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import SearchIcon from '@mui/icons-material/Search';
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import ReorderIcon from '@mui/icons-material/Reorder';
 
@@ -33,6 +33,10 @@ const BarraLateral = () => {
       navigate('/disponibilidade')
     }
 
+    function quemSomos() {
+      navigate('/quemsomos')
+    }
+
   return (
     <Box
       sx={{
@@ -51,10 +55,10 @@ const BarraLateral = () => {
         <CalendarTodayIcon sx={{ width: 40, height: 40, color:"#ffffff" }} onClick={reserva}/>
       </IconButton>
       <IconButton sx={{ backgroundColor: "#ff0002" }}>
-        <HighlightOffIcon sx={{ width: 40, height: 40, color:"#ffffff" }} onClick={disponibilidade}/>
+        <SearchIcon sx={{ width: 40, height: 40, color:"#ffffff" }} onClick={disponibilidade}/>
       </IconButton>
       <IconButton sx={{ backgroundColor: "#ff0002" }}>
-        <GroupIcon sx={{ width: 40, height: 40, color:"#ffffff" }} />
+        <GroupIcon sx={{ width: 40, height: 40, color:"#ffffff" }} onClick={quemSomos}/>
       </IconButton>
       <IconButton sx={{ backgroundColor: "#ff0002" }}>
         <SettingsIcon sx={{ width: 40, height: 40, color:"#ffffff" }}/>
