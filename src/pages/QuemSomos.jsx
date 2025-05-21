@@ -2,9 +2,7 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import BarraLateral from "../components/BarraLateral";
 import Typography from "@mui/material/Typography";
-import React from "react";
 import senai from "../assets/logo_senai.png";
-import { Height } from "@mui/icons-material";
 
 function QuemSomos() {
   const styles = getStyles();

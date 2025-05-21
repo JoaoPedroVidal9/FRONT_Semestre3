@@ -37,6 +37,10 @@ const BarraLateral = () => {
       navigate('/quemsomos')
     }
 
+    function PerfilUser() {
+      navigate('/perfil')
+    }
+
   return (
     <Box
       sx={{
@@ -61,7 +65,7 @@ const BarraLateral = () => {
         <GroupIcon sx={{ width: 40, height: 40, color:"#ffffff" }} onClick={quemSomos}/>
       </IconButton>
       <IconButton sx={{ backgroundColor: "#ff0002" }}>
-        <SettingsIcon sx={{ width: 40, height: 40, color:"#ffffff" }}/>
+        <SettingsIcon sx={{ width: 40, height: 40, color:"#ffffff" }} onClick={PerfilUser}/>
       </IconButton>
       <IconButton sx={{ backgroundColor: "#ff0002" }}>
         <FormatListBulletedIcon sx={{ width: 40, height: 40, color:"#ffffff" }} onClick={salas}/>

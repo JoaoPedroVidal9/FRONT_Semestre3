@@ -8,6 +8,7 @@ import LayoutImagens from "./components/LayoutImagens";
 import ReservaSalas from "./pages/ReservaSalas"
 import ConsultarDisponibilidade from "./pages/ConsultarDisponibilidade";
 import QuemSomos from "./pages/QuemSomos";
+import PerfilUser from "./pages/PerfilUser";
 
 function App() {
   return (
@@ -59,6 +60,14 @@ function App() {
           element={
             <RotasProtegidas>
               <QuemSomos />
+            </RotasProtegidas>
+          }
+        />
+        <Route
+          path="/perfil"
+          element={
+            <RotasProtegidas>
+              <PerfilUser />
             </RotasProtegidas>
           }
         />
