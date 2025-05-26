@@ -6,65 +6,249 @@ import Typography from "@mui/material/Typography";
 import api from "../axios/axios";
 import TextField from "@mui/material/TextField";
 import { useEffect, useState } from "react";
+import IconButton from "@mui/material/IconButton";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { useNavigate } from "react-router-dom";
+import Button from "@mui/material/Button";
 
 function PerfilUser() {
   const styles = getStyles();
 
-  const [perfilUser, setPerfilUser] = useState([
-    
-  ])
+  const navigate = useNavigate();
+
+  function ReservasUser() {
+    navigate("/reservasUser");
+  }
+
+  const [perfilUser, setPerfilUser] = useState({
+    cpf: "",
+    password: "",
+    password2: "",
+    email: "",
+    name: "",
+    contagem: "0",
+    showPassword: false,
+    showPassword2: false,
+  });
+
+  const onChange = (event) => {
+    const { name, value } = event.target;
+    setPerfilUser({ ...perfilUser, [name]: value });
+  };
 
   useEffect(() => {
     async function GetUserByCPF() {
       try {
-        const cpf = localStorage.getItem("id_usuario")
-        const response = await api.getUser(cpf)
-        setPerfilUser(response.data.results)
-        set
+        const cpf = localStorage.getItem("id_usuario");
+        await api.getUserById(cpf).then(
+          (response) => {
+            const userData = response.data.user;
+            setPerfilUser((user) => ({
+              ...user,
+              cpf: userData.cpf,
+              password: userData.password,
+              email: userData.email,
+              name: userData.name,
+            }));
+          },
+          (error) => {
+            alert(error.response.data.error);
+          }
+        );
       } catch (error) {
-        console.log("Erro", error)
+        console.log("Erro", error);
       }
     }
 
-    GetUserByCPF()
-  }, [])
+    async function getScheduleByUserID() {
+      try {
+        const cpf = localStorage.getItem("id_usuario");
+        await api.getUserSchedules(cpf).then(
+          (response) => {
+            const numeroReservas = response.data.contagem;
+            setPerfilUser((user) => ({
+              ...user,
+              contagem: String(numeroReservas),
+            }));
+          },
+          (error) => {
+            alert(error.response.data.error);
+          }
+        );
+      } catch (error) {
+        console.log("Erro", error);
+      }
+    }
 
-  const onChange = (event) => {
-    const { name, value } = event.target;
-    setWeek({ ...week, [name]: value });
+    GetUserByCPF();
+    getScheduleByUserID();
+  }, []);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    update();
   };
+
+  async function update() {
+    const cpf = localStorage.getItem("id_usuario");
+    await api.updateUser(perfilUser, cpf).then(
+      (response) => {
+        alert(response.data.message);
+      },
+      (error) => {
+        alert(error.response.data.error);
+      }
+    );
+  }
 
   return (
     <>
       <BarraLateral />
       <Container component="main" maxWidth="xl" style={styles.container}>
         <Box style={styles.boxMain}>
-
           {/* Logo do Senai */}
-          <img
-            style={{
-              width: "300px",
-            }}
-            src={senai}
-          />
+          <img style={{ width: "300px" }} src={senai} />
 
-          <Box style={styles.box01}>
-            <Typography>TESTE</Typography>
+          <Box style={styles.box01} component="form" onSubmit={handleSubmit}>
+            <Typography variant="h5">Perfil do Usuário</Typography>
+
             <TextField
               required
               fullWidth
-              margin="dense"
-              label="Número da Sala"
-              name="classroomID"
-              value={week.classroomID}
+              margin="normal"
+              label="Nome"
+              name="name"
+              value={perfilUser.name}
               onChange={onChange}
-              size="small"
-              slotProps={{ inputLabel: { shrink: true } }}
-              sx={{ width: 500 }}
+              variant="standard"
             />
+
+            <TextField
+              required
+              fullWidth
+              margin="normal"
+              label="E-mail"
+              name="email"
+              value={perfilUser.email}
+              onChange={onChange}
+              variant="standard"
+            />
+
+            {/* Caixa para estilização do input da senha */}
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                width: "100%",
+              }}
+            >
+              <TextField
+                required
+                fullWidth
+                margin="normal"
+                label="Digite sua senha"
+                name="password"
+                id="password"
+                type={perfilUser.showPassword ? "text" : "password"}
+                value={perfilUser.password}
+                onChange={onChange}
+                variant="standard"
+              />
+              <IconButton
+                onClick={() =>
+                  setPerfilUser({
+                    ...perfilUser,
+                    showPassword: !perfilUser.showPassword,
+                  })
+                }
+              >
+                {perfilUser.showPassword ? (
+                  <VisibilityIcon />
+                ) : (
+                  <VisibilityOffIcon />
+                )}
+              </IconButton>
+            </Box>
+
+            {/* Caixa para estilização do input de confirmar senha */}
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                width: "100%",
+              }}
+            >
+              <TextField
+                required
+                fullWidth
+                margin="normal"
+                label="Confirme sua senha"
+                name="password2"
+                id="password2"
+                type={perfilUser.showPassword2 ? "text" : "password"}
+                value={perfilUser.password2}
+                onChange={onChange}
+                variant="standard"
+              />
+              <IconButton
+                onClick={() =>
+                  setPerfilUser({
+                    ...perfilUser,
+                    showPassword2: !perfilUser.showPassword2,
+                  })
+                }
+              >
+                {perfilUser.showPassword2 ? (
+                  <VisibilityIcon />
+                ) : (
+                  <VisibilityOffIcon />
+                )}
+              </IconButton>
+            </Box>
+
+            <TextField
+              required
+              fullWidth
+              margin="normal"
+              label="CPF"
+              name="cpf"
+              value={perfilUser.cpf}
+              onChange={onChange}
+              variant="standard"
+            />
+
+            <Box style={styles.box02}>
+              <Typography>Número de reservas: {perfilUser.contagem}</Typography>
+              <Typography
+                onClick={ReservasUser}
+                sx={{
+                  cursor: "pointer",
+                  color: "#42a5f5",
+                  transition: "color 0.3s",
+                  "&:hover": {
+                    color: "#215299", // azul claro
+                  },
+                  textDecoration: "underline",
+                }}
+              >
+                detalhes
+              </Typography>
+            </Box>
+
+            <Button
+              type="submit"
+              variant="contained"
+              sx={{
+                width: "20%",
+                marginTop: "15px",
+                backgroundColor: "#215299",
+                alignSelf: "center",
+              }}
+            >
+              Atualizar
+            </Button>
           </Box>
-
-
         </Box>
       </Container>
     </>
@@ -80,7 +264,6 @@ function getStyles() {
       flexDirection: "column",
       alignItems: "center",
       justifyContent: "center",
-      backgroundColor: "red"
     },
     boxMain: {
       width: "70%",
@@ -89,17 +272,23 @@ function getStyles() {
       flexDirection: "column",
       alignItems: "center",
       justifyContent: "space-between",
-      backgroundColor: "blue"
+      padding: "20px",
     },
     box01: {
       width: "100%",
-      height: "100%",
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
       justifyContent: "center",
       gap: "20px",
-      backgroundColor: "green"
+      padding: "30px",
+      borderRadius: "8px",
+    },
+    box02: {
+      width: "100%",
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "space-between",
     },
   };
 }
