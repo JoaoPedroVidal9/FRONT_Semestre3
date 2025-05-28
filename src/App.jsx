@@ -5,10 +5,11 @@ import SalasLista from "./pages/SalasLista";
 import Login from "./pages/Login";
 import Cadastro from "./pages/Cadastro";
 import LayoutImagens from "./components/LayoutImagens";
-import ReservaSalas from "./pages/ReservaSalas"
+import ReservaSalas from "./pages/ReservaSalas";
 import ConsultarDisponibilidade from "./pages/ConsultarDisponibilidade";
 import QuemSomos from "./pages/QuemSomos";
 import PerfilUser from "./pages/PerfilUser";
+import ReservasUser from "./pages/ReservasUser";
 
 function App() {
   return (
@@ -68,6 +69,15 @@ function App() {
           element={
             <RotasProtegidas>
               <PerfilUser />
+            </RotasProtegidas>
+          }
+        />
+
+        <Route
+          path="/reservasuser"
+          element={
+            <RotasProtegidas>
+              <ReservasUser />
             </RotasProtegidas>
           }
         />

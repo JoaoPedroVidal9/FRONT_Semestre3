@@ -18,7 +18,7 @@ function PerfilUser() {
   const navigate = useNavigate();
 
   function ReservasUser() {
-    navigate("/reservasUser");
+    navigate("/reservasuser");
   }
 
   const [perfilUser, setPerfilUser] = useState({
@@ -73,7 +73,7 @@ function PerfilUser() {
             }));
           },
           (error) => {
-            alert(error.response.data.error);
+            console.log(error.response.data.error);
           }
         );
       } catch (error) {
@@ -95,6 +95,7 @@ function PerfilUser() {
     await api.updateUser(perfilUser, cpf).then(
       (response) => {
         alert(response.data.message);
+        localStorage.setItem("id_usuario", perfilUser.cpf);
       },
       (error) => {
         alert(error.response.data.error);
