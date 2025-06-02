@@ -34,8 +34,24 @@ function ReservasUser() {
         console.log("Erro", error);
       }
     }
+
     getScheduleByUserID();
   }, []);
+
+  async function deleteScheduleUser(idReserva) {
+    try {
+      const response = await api.deleteSchedule(idReserva);
+      alert(response.data.message);
+
+      // Remove do estado local, a reserva deletada
+      setReservasUser((prev) =>
+        prev.filter((reserva) => reserva.id !== idReserva)
+      )
+
+    } catch (error) {
+      alert(error.response.data.error);
+    }
+  }
 
   const formatDate = (dateStr) => {
     const date = new Date(dateStr);
@@ -56,11 +72,23 @@ function ReservasUser() {
             {reservasUser.map((sala, index) => (
               <Box key={index} style={styles.card}>
                 <Typography variant="h5">Sala: {sala.classroom}</Typography>
-                <Typography>Data de Início: {formatDate(sala.dateStart)}</Typography>
-                <Typography>Data de Término: {formatDate(sala.dateEnd)}</Typography>
+                <Typography>
+                  Data de Início: {formatDate(sala.dateStart)}
+                </Typography>
+                <Typography>
+                  Data de Término: {formatDate(sala.dateEnd)}
+                </Typography>
                 <Typography>
                   Horário: {sala.timeStart} - {sala.timeEnd}
                 </Typography>
+                <Box style={styles.boxBotao}>
+                  <Typography
+                    onClick={() => deleteScheduleUser(sala.id)}
+                    style={styles.botao}
+                  >
+                    DELETAR
+                  </Typography>
+                </Box>
               </Box>
             ))}
           </Box>
@@ -113,7 +141,24 @@ function getStyles() {
       padding: "20px",
       borderRadius: "10px",
       boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-      width: "300px",
+      width: "250px",
+    },
+    botao: {
+      cursor: "pointer",
+      backgroundColor: "#ff0002",
+      width: "100px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      borderRadius: "7px",
+      padding: "2px",
+      marginTop: "7px",
+      color: "white",
+    },
+    boxBotao: {
+      width: "100%",
+      display: "flex",
+      justifyContent: "center",
     },
   };
 }

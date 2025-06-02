@@ -25,8 +25,9 @@ const sheets = {
     postReserva:(sala) => api.post("schedule",sala),
     getScheduleByWeek:(week) => api.post("schedule/available/",week),
     getUserById: (userID) => api.get(`/user/${userID}`),
+    updateUser: (perfilUser, cpf ) => api.put(`user/${cpf}`, perfilUser),
     getUserSchedules: (userID) => api.get(`schedule/user/${userID}`),
-    updateUser: (perfilUser, cpf ) => api.put(`user/${cpf}`, perfilUser)
+    deleteSchedule: (idSchedule) => api.delete(`schedule/${idSchedule}`)
 }
 
 export default sheets;
