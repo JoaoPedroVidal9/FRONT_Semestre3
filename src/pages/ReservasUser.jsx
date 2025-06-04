@@ -4,18 +4,16 @@ import BarraLateral from "../components/BarraLateral";
 import senai from "../assets/logo_senai.png";
 import Typography from "@mui/material/Typography";
 import api from "../axios/axios";
-import TextField from "@mui/material/TextField";
 import { useEffect, useState } from "react";
-import IconButton from "@mui/material/IconButton";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import { useNavigate } from "react-router-dom";
-import Button from "@mui/material/Button";
+import Modal from "@mui/material/Modal";
 
 function ReservasUser() {
   const styles = getStyles();
 
   const [reservasUser, setReservasUser] = useState([]);
+
+  const [openModal, setOpenModal] = useState(false);
+  const [reservaSelecionada, setReservaSelecionada] = useState(null);
 
   useEffect(() => {
     async function getScheduleByUserID() {
@@ -46,8 +44,7 @@ function ReservasUser() {
       // Remove do estado local, a reserva deletada
       setReservasUser((prev) =>
         prev.filter((reserva) => reserva.id !== idReserva)
-      )
-
+      );
     } catch (error) {
       alert(error.response.data.error);
     }
@@ -59,6 +56,16 @@ function ReservasUser() {
     const month = String(date.getMonth() + 1).padStart(2, "0");
     const year = date.getFullYear();
     return `${day}/${month}/${year}`;
+  };
+
+  const handleOpenModal = (reserva) => {
+    setReservaSelecionada(reserva);
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+    setReservaSelecionada(null);
   };
 
   return (
@@ -83,7 +90,7 @@ function ReservasUser() {
                 </Typography>
                 <Box style={styles.boxBotao}>
                   <Typography
-                    onClick={() => deleteScheduleUser(sala.id)}
+                    onClick={() => handleOpenModal(sala)}
                     style={styles.botao}
                   >
                     DELETAR
@@ -92,6 +99,75 @@ function ReservasUser() {
               </Box>
             ))}
           </Box>
+          <Modal
+            open={openModal}
+            onClose={handleCloseModal}
+            aria-labelledby="modal-title"
+            aria-describedby="modal-description"
+          >
+            <Box
+              sx={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                bgcolor: "background.paper",
+                boxShadow: 24,
+                p: 4,
+                borderRadius: 2,
+                width: 400,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: 2,
+              }}
+            >
+              <Typography
+                id="modal-title"
+                variant="h6"
+                component="h2"
+                textAlign="center"
+              >
+                Deseja realmente excluir a reserva?
+              </Typography>
+              <Typography variant="body2" textAlign="center">
+                Sala: {reservaSelecionada?.classroom}
+              </Typography>
+              <Box sx={{ display: "flex", gap: 2, marginTop: 2 }}>
+                <Typography
+                  onClick={handleCloseModal}
+                  sx={{
+                    cursor: "pointer",
+                    px: 3,
+                    py: 1,
+                    borderRadius: 2,
+                    backgroundColor: "#ff0002",
+                    color: "#fff",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Cancelar
+                </Typography>
+                <Typography
+                  onClick={() => {
+                    deleteScheduleUser(reservaSelecionada.id);
+                    handleCloseModal();
+                  }}
+                  sx={{
+                    cursor: "pointer",
+                    px: 3,
+                    py: 1,
+                    borderRadius: 2,
+                    backgroundColor: "#215299",
+                    color: "#fff",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Confirmar
+                </Typography>
+              </Box>
+            </Box>
+          </Modal>
         </Box>
       </Container>
     </>
@@ -102,58 +178,57 @@ function getStyles() {
   return {
     container: {
       width: "100%",
-      height: "100vh",
+      minHeight: "100vh",
+      paddingTop: "30px",
+      paddingBottom: "30px",
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
-      justifyContent: "center",
     },
     boxMain: {
-      width: "80%",
-      height: "90%",
+      width: "100%",
+      maxWidth: "1200px",
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
-      justifyContent: "space-between",
-      padding: "20px",
     },
     box01: {
-      width: "70%",
-      height: "100%",
-      display: "flex",
-      flexDirection: "row",
-      flexWrap: "wrap",
-      alignItems: "start",
-      justifyContent: "space-between",
-      gap: "20px",
-      padding: "30px",
-      borderRadius: "8px",
-      marginTop: "20px",
-    },
-    box02: {
       width: "100%",
       display: "flex",
-      flexDirection: "row",
-      justifyContent: "space-between",
+      flexWrap: "wrap",
+      justifyContent: "center",
+      gap: "30px",
+      marginTop: "40px",
     },
     card: {
-      backgroundColor: "#d9d9d9",
+      backgroundColor: "#FFFFFF",
       padding: "20px",
-      borderRadius: "10px",
-      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-      width: "250px",
+      borderRadius: "12px",
+      border: "2px solid #215299",
+      boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+      width: "280px",
+      display: "flex",
+      flexDirection: "column",
+      gap: "10px",
+      transition: "transform 0.2s ease-in-out",
+    },
+    cardHover: {
+      transform: "scale(1.03)",
     },
     botao: {
       cursor: "pointer",
       backgroundColor: "#ff0002",
       width: "100px",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      borderRadius: "7px",
-      padding: "2px",
-      marginTop: "7px",
-      color: "white",
+      textAlign: "center",
+      borderRadius: "8px",
+      padding: "8px 0",
+      marginTop: "10px",
+      color: "#FFFFFF",
+      fontWeight: "bold",
+      transition: "background-color 0.5s",
+    },
+    botaoHover: {
+      backgroundColor: "#cc0000",
     },
     boxBotao: {
       width: "100%",

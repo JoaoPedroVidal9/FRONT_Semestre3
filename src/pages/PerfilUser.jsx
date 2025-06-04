@@ -11,6 +11,9 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import Modal from "@mui/material/Modal";
+import Stack from "@mui/material/Stack";
 
 function PerfilUser() {
   const styles = getStyles();
@@ -112,7 +115,10 @@ function PerfilUser() {
           <img style={{ width: "300px" }} src={senai} />
 
           <Box style={styles.box01} component="form" onSubmit={handleSubmit}>
-            <Typography variant="h5">Perfil do Usuário</Typography>
+            <Box style={styles.boxDelete}>
+              <Typography variant="h5">Perfil do Usuário</Typography>
+              <RemoveCircleIcon style={styles.icon} onClick=/>
+            </Box>
 
             <TextField
               required
@@ -260,37 +266,49 @@ function getStyles() {
   return {
     container: {
       width: "100%",
-      height: "100vh",
+      minHeight: "100vh",
       display: "flex",
-      flexDirection: "column",
       alignItems: "center",
       justifyContent: "center",
+      padding: "40px 20px",
     },
     boxMain: {
-      width: "70%",
-      height: "90%",
+      width: "100%",
+      maxWidth: "700px",
+      backgroundColor: "#ffffff",
+      borderRadius: "16px",
+      padding: "40px",
+      boxShadow: "0 8px 24px rgba(0, 0, 0, 0.1)",
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
-      justifyContent: "space-between",
-      padding: "20px",
+      gap: "30px",
     },
     box01: {
       width: "100%",
       display: "flex",
       flexDirection: "column",
-      alignItems: "center",
-      justifyContent: "center",
       gap: "20px",
-      padding: "30px",
-      borderRadius: "8px",
+      marginTop: "20px",
     },
     box02: {
       width: "100%",
       display: "flex",
-      flexDirection: "row",
       justifyContent: "space-between",
+      alignItems: "center",
+      marginTop: "10px",
+      padding: "0 4px",
     },
+    icon: {
+      color: "#ff0002",
+      cursor: "pointer"
+    },
+    boxDelete: {
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between"
+    }
   };
 }
 
