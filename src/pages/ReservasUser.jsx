@@ -11,7 +11,6 @@ function ReservasUser() {
   const styles = getStyles();
 
   const [reservasUser, setReservasUser] = useState([]);
-
   const [openModal, setOpenModal] = useState(false);
   const [reservaSelecionada, setReservaSelecionada] = useState(null);
 
@@ -19,20 +18,13 @@ function ReservasUser() {
     async function getScheduleByUserID() {
       try {
         const cpf = localStorage.getItem("id_usuario");
-        await api.getUserSchedules(cpf).then(
-          (response) => {
-            const reservas = response.data.results;
-            setReservasUser(reservas);
-          },
-          (error) => {
-            alert(error.response.data.error);
-          }
-        );
+        response = await api.getUserSchedules(cpf);
+        setReservasUser(response.data.results);
       } catch (error) {
         console.log("Erro", error);
+        alert(error.response.data.error);
       }
     }
-
     getScheduleByUserID();
   }, []);
 
