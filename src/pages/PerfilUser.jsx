@@ -102,6 +102,7 @@ function PerfilUser() {
       (response) => {
         alert(response.data.message);
         localStorage.setItem("id_usuario", perfilUser.cpf);
+        localStorage.setItem("token", response.data.token)
       },
       (error) => {
         alert(error.response.data.error);
