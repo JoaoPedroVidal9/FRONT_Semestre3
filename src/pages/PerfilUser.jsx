@@ -11,7 +11,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
-import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import Modal from "@mui/material/Modal";
 import Stack from "@mui/material/Stack";
 
@@ -59,7 +59,6 @@ function PerfilUser() {
             setPerfilUser((user) => ({
               ...user,
               cpf: userData.cpf,
-              password: userData.password,
               email: userData.email,
               name: userData.name,
             }));
@@ -113,10 +112,11 @@ function PerfilUser() {
   const deleteUser = async () => {
     try {
       const cpf = localStorage.getItem("id_usuario");
-      const response = await api.deleteUser(cpf, perfilUser);
+      const response = await api.deleteUser(cpf);
       alert(response.data.message);
       localStorage.removeItem("id_usuario");
       localStorage.removeItem("token");
+      localStorage.removeItem("authenticated");
       navigate("/");
     } catch (error) {
       alert(error.response.data.error);
@@ -147,19 +147,34 @@ function PerfilUser() {
                 <Typography id="modal-title" variant="h6" component="h2">
                   Deseja deletar esse usuário?
                 </Typography>
-                <Stack direction="row" spacing={2} justifyContent="center" marginTop={3}>
+                <Stack
+                  direction="row"
+                  spacing={2}
+                  justifyContent="center"
+                  marginTop={3}
+                >
                   <Button
-                    variant="contained"
-                    color="error"
+                    variant="outlined"
                     onClick={() => {
                       handleCloseModal();
                       deleteUser();
                     }}
+                    sx={{
+                      backgroundColor: "#215299",
+                      color: "#ffffff",
+                      "&:hover": {
+                        backgroundColor: "#183b6b",
+                      },
+                    }}
                   >
-                    Sim
+                    CONFIRMAR
                   </Button>
-                  <Button variant="outlined" onClick={handleCloseModal}>
-                    Não
+                  <Button
+                    variant="contained"
+                    color="error"
+                    onClick={handleCloseModal}
+                  >
+                    CANCELAR
                   </Button>
                 </Stack>
               </Box>
@@ -187,6 +202,17 @@ function PerfilUser() {
               variant="standard"
             />
 
+            <TextField
+              required
+              fullWidth
+              margin="normal"
+              label="CPF"
+              name="cpf"
+              value={perfilUser.cpf}
+              onChange={onChange}
+              variant="standard"
+            />
+
             {/* Caixa para estilização do input da senha antiga */}
             <Box
               sx={{
@@ -199,7 +225,7 @@ function PerfilUser() {
                 required
                 fullWidth
                 margin="normal"
-                label="Digite sua senha antiga"
+                label="Digite sua senha atual"
                 name="oldPassword"
                 id="oldPassword"
                 type={perfilUser.showPassword ? "text" : "password"}
@@ -232,10 +258,9 @@ function PerfilUser() {
               }}
             >
               <TextField
-                required
                 fullWidth
                 margin="normal"
-                label="Digite sua nova senha"
+                label="Digite sua nova senha (caso houver)"
                 name="password"
                 id="passwordNew"
                 type={perfilUser.showPassword2 ? "text" : "password"}
@@ -268,10 +293,9 @@ function PerfilUser() {
               }}
             >
               <TextField
-                required
                 fullWidth
                 margin="normal"
-                label="Confirme sua nova senha"
+                label="Confirme sua nova senha (caso houver)"
                 name="password2"
                 id="password2"
                 type={perfilUser.showPassword3 ? "text" : "password"}
@@ -294,17 +318,6 @@ function PerfilUser() {
                 )}
               </IconButton>
             </Box>
-
-            <TextField
-              required
-              fullWidth
-              margin="normal"
-              label="CPF"
-              name="cpf"
-              value={perfilUser.cpf}
-              onChange={onChange}
-              variant="standard"
-            />
 
             <Box style={styles.box02}>
               <Typography>Número de reservas: {perfilUser.contagem}</Typography>
@@ -382,13 +395,13 @@ function getStyles() {
     },
     icon: {
       color: "#ff0002",
-      cursor: "pointer"
+      cursor: "pointer",
     },
     boxDelete: {
       display: "flex",
       flexDirection: "row",
       alignItems: "center",
-      justifyContent: "space-between"
+      justifyContent: "space-between",
     },
     modalBox: {
       position: "absolute",
@@ -402,7 +415,7 @@ function getStyles() {
       borderRadius: "12px",
       padding: "32px 24px",
       textAlign: "center",
-    }
+    },
   };
 }
 

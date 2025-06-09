@@ -135,20 +135,6 @@ function ReservasUser() {
               </Typography>
               <Box sx={{ display: "flex", gap: 2, marginTop: 2 }}>
                 <Typography
-                  onClick={handleCloseModal}
-                  sx={{
-                    cursor: "pointer",
-                    px: 3,
-                    py: 1,
-                    borderRadius: 2,
-                    backgroundColor: "#ff0002",
-                    color: "#fff",
-                    fontWeight: "bold",
-                  }}
-                >
-                  Cancelar
-                </Typography>
-                <Typography
                   onClick={() => {
                     deleteScheduleUser(reservaSelecionada.id);
                     handleCloseModal();
@@ -164,6 +150,20 @@ function ReservasUser() {
                   }}
                 >
                   Confirmar
+                </Typography>
+                <Typography
+                  onClick={handleCloseModal}
+                  sx={{
+                    cursor: "pointer",
+                    px: 3,
+                    py: 1,
+                    borderRadius: 2,
+                    backgroundColor: "#ff0002",
+                    color: "#fff",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Cancelar
                 </Typography>
               </Box>
             </Box>
