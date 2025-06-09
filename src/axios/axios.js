@@ -22,12 +22,14 @@ const sheets = {
     getSalas:()=>api.get("classroom"),
     postLogin:(user) => api.post("user/login", user),
     postCadastro:(user) => api.post("user",user),
-    postReserva:(sala) => api.post("schedule",sala),
-    getScheduleByWeek:(week) => api.post("schedule/available/",week),
+    deleteUser: (cpf) => api.delete('user/'),
     getUserById: (userID) => api.get(`/user/${userID}`),
     updateUser: (perfilUser, cpf ) => api.put(`user/${cpf}`, perfilUser),
+    postReserva:(sala) => api.post("schedule",sala),
+    getScheduleByWeek:(week) => api.post("schedule/available/",week),
     getUserSchedules: (userID) => api.get(`schedule/user/${userID}`),
     deleteSchedule: (idSchedule) => api.delete(`schedule/${idSchedule}`)
+    
 }
 
 export default sheets;

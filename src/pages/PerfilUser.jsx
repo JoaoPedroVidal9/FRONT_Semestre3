@@ -17,15 +17,14 @@ import Stack from "@mui/material/Stack";
 
 function PerfilUser() {
   const styles = getStyles();
-
+  const [openModal, setOpenModal] = useState(false);
+  const handleOpenModal = () => setOpenModal(true);
+  const handleCloseModal = () => setOpenModal(false);
   const navigate = useNavigate();
-
-  function ReservasUser() {
-    navigate("/reservasuser");
-  }
 
   const [perfilUser, setPerfilUser] = useState({
     cpf: "",
+    oldPassword: "",
     password: "",
     password2: "",
     email: "",
@@ -33,12 +32,22 @@ function PerfilUser() {
     contagem: "0",
     showPassword: false,
     showPassword2: false,
+    showPassword3: false,
   });
 
   const onChange = (event) => {
     const { name, value } = event.target;
     setPerfilUser({ ...perfilUser, [name]: value });
   };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    update();
+  };
+
+  function ReservasUser() {
+    navigate("/reservasuser");
+  }
 
   useEffect(() => {
     async function GetUserByCPF() {
@@ -88,11 +97,6 @@ function PerfilUser() {
     getScheduleByUserID();
   }, []);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    update();
-  };
-
   async function update() {
     const cpf = localStorage.getItem("id_usuario");
     await api.updateUser(perfilUser, cpf).then(
@@ -106,6 +110,19 @@ function PerfilUser() {
     );
   }
 
+  const deleteUser = async () => {
+    try {
+      const cpf = localStorage.getItem("id_usuario");
+      const response = await api.deleteUser(cpf, perfilUser);
+      alert(response.data.message);
+      localStorage.removeItem("id_usuario");
+      localStorage.removeItem("token");
+      navigate("/");
+    } catch (error) {
+      alert(error.response.data.error);
+    }
+  };
+
   return (
     <>
       <BarraLateral />
@@ -117,8 +134,36 @@ function PerfilUser() {
           <Box style={styles.box01} component="form" onSubmit={handleSubmit}>
             <Box style={styles.boxDelete}>
               <Typography variant="h5">Perfil do Usuário</Typography>
-              <RemoveCircleIcon style={styles.icon} onClick=/>
+              <RemoveCircleIcon style={styles.icon} onClick={handleOpenModal} />
             </Box>
+
+            <Modal
+              open={openModal}
+              onClose={handleCloseModal}
+              aria-labelledby="modal-title"
+              aria-describedby="modal-description"
+            >
+              <Box style={styles.modalBox}>
+                <Typography id="modal-title" variant="h6" component="h2">
+                  Deseja deletar esse usuário?
+                </Typography>
+                <Stack direction="row" spacing={2} justifyContent="center" marginTop={3}>
+                  <Button
+                    variant="contained"
+                    color="error"
+                    onClick={() => {
+                      handleCloseModal();
+                      deleteUser();
+                    }}
+                  >
+                    Sim
+                  </Button>
+                  <Button variant="outlined" onClick={handleCloseModal}>
+                    Não
+                  </Button>
+                </Stack>
+              </Box>
+            </Modal>
 
             <TextField
               required
@@ -142,7 +187,7 @@ function PerfilUser() {
               variant="standard"
             />
 
-            {/* Caixa para estilização do input da senha */}
+            {/* Caixa para estilização do input da senha antiga */}
             <Box
               sx={{
                 display: "flex",
@@ -154,11 +199,11 @@ function PerfilUser() {
                 required
                 fullWidth
                 margin="normal"
-                label="Digite sua senha"
-                name="password"
-                id="password"
+                label="Digite sua senha antiga"
+                name="oldPassword"
+                id="oldPassword"
                 type={perfilUser.showPassword ? "text" : "password"}
-                value={perfilUser.password}
+                value={perfilUser.oldPassword}
                 onChange={onChange}
                 variant="standard"
               />
@@ -178,7 +223,7 @@ function PerfilUser() {
               </IconButton>
             </Box>
 
-            {/* Caixa para estilização do input de confirmar senha */}
+            {/* Caixa para estilização do input da nova senha */}
             <Box
               sx={{
                 display: "flex",
@@ -190,11 +235,11 @@ function PerfilUser() {
                 required
                 fullWidth
                 margin="normal"
-                label="Confirme sua senha"
-                name="password2"
-                id="password2"
+                label="Digite sua nova senha"
+                name="password"
+                id="passwordNew"
                 type={perfilUser.showPassword2 ? "text" : "password"}
-                value={perfilUser.password2}
+                value={perfilUser.password}
                 onChange={onChange}
                 variant="standard"
               />
@@ -207,6 +252,42 @@ function PerfilUser() {
                 }
               >
                 {perfilUser.showPassword2 ? (
+                  <VisibilityIcon />
+                ) : (
+                  <VisibilityOffIcon />
+                )}
+              </IconButton>
+            </Box>
+
+            {/* Caixa para estilização do input de confirmar nova senha */}
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                width: "100%",
+              }}
+            >
+              <TextField
+                required
+                fullWidth
+                margin="normal"
+                label="Confirme sua nova senha"
+                name="password2"
+                id="password2"
+                type={perfilUser.showPassword3 ? "text" : "password"}
+                value={perfilUser.password2}
+                onChange={onChange}
+                variant="standard"
+              />
+              <IconButton
+                onClick={() =>
+                  setPerfilUser({
+                    ...perfilUser,
+                    showPassword3: !perfilUser.showPassword3,
+                  })
+                }
+              >
+                {perfilUser.showPassword3 ? (
                   <VisibilityIcon />
                 ) : (
                   <VisibilityOffIcon />
@@ -308,6 +389,19 @@ function getStyles() {
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "space-between"
+    },
+    modalBox: {
+      position: "absolute",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+      width: 400,
+      backgroundColor: "#fff",
+      border: "2px solid #215299",
+      boxShadow: 24,
+      borderRadius: "12px",
+      padding: "32px 24px",
+      textAlign: "center",
     }
   };
 }
