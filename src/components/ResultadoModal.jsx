@@ -8,13 +8,27 @@ const ResultadoModal = ({ open, handleClose, content }) => {
 
       return Object.entries(parsed).map(([dia, horarios]) => (
         <Box key={dia} sx={{ mb: 2 }}>
-          <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+          <Typography
+            variant="subtitle1"
+            sx={{
+              fontWeight: "bold",
+              color: "#4b5563",
+              borderBottom: "1px solid #215299",
+              pb: 0.5,
+              mb: 1,
+            }}
+          >
             {dia}
           </Typography>
-          <ul style={{ margin: 0, paddingLeft: "20px" }}>
+          <ul style={{ margin: 0, paddingLeft: "1.2rem", listStyleType: "disc" }}>
             {horarios.map((hora, index) => (
               <li key={index}>
-                <Typography variant="body2">{hora}</Typography>
+                <Typography
+                  variant="body2"
+                  sx={{ color: "#000000" }}
+                >
+                  {hora}
+                </Typography>
               </li>
             ))}
           </ul>
@@ -42,28 +56,49 @@ const ResultadoModal = ({ open, handleClose, content }) => {
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          width: 400,
-          maxHeight: "70vh",
-          bgcolor:"white",
-          boxShadow: 12,
-          p: 3,
-          borderRadius: 2,
+          width: 480,
+          maxHeight: "80vh",
+          bgcolor: "#ffffff",
+          boxShadow: 24,
+          p: 4,
+          borderRadius: "16px",
           overflowY: "auto",
+          border: "2px solid #af2e2e",
         }}
       >
-        <Typography id="modal-title" variant="h6" component="h2" sx={{ mb: 2 }}>
+        <Typography
+          id="modal-title"
+          variant="h6"
+          component="h2"
+          sx={{
+            mb: 3,
+            color: "#215299",
+            fontWeight: "bold",
+            textAlign: "center",
+          }}
+        >
           Horários Disponíveis
         </Typography>
+
         {renderContent()}
+
         <Button
           variant="contained"
-          size="small"
           onClick={handleClose}
           sx={{
+            mt: 3,
+            ml: "auto",
             display: "block",
-            marginTop: 2,
-            marginLeft: "auto",
-            backgroundColor: "#1976d2",
+            backgroundColor: "#af2e2e",
+            color: "#ffffff",
+            fontWeight: "bold",
+            "&:hover": {
+              backgroundColor: "#991b1b",
+            },
+            borderRadius: "12px",
+            px: 3,
+            py: 1,
+            boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
           }}
         >
           Fechar

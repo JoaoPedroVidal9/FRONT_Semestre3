@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import api from "../axios/axios";
 import { useEffect, useState } from "react";
 import Modal from "@mui/material/Modal";
+import Button from "@mui/material/Button";
 
 function ReservasUser() {
   const styles = getStyles();
@@ -18,7 +19,7 @@ function ReservasUser() {
     async function getScheduleByUserID() {
       try {
         const cpf = localStorage.getItem("id_usuario");
-        response = await api.getUserSchedules(cpf);
+        const response = await api.getUserSchedules(cpf);
         setReservasUser(response.data.results);
       } catch (error) {
         console.log("Erro", error);
@@ -68,28 +69,33 @@ function ReservasUser() {
           {/* Logo do Senai */}
           <img style={{ width: "300px" }} src={senai} />
           <Box style={styles.box01}>
-            {reservasUser.map((sala, index) => (
-              <Box key={index} style={styles.card}>
-                <Typography variant="h5">Sala: {sala.classroom}</Typography>
-                <Typography>
-                  Data de Início: {formatDate(sala.dateStart)}
-                </Typography>
-                <Typography>
-                  Data de Término: {formatDate(sala.dateEnd)}
-                </Typography>
-                <Typography>
-                  Horário: {sala.timeStart} - {sala.timeEnd}
-                </Typography>
-                <Box style={styles.boxBotao}>
-                  <Typography
-                    onClick={() => handleOpenModal(sala)}
-                    style={styles.botao}
-                  >
-                    DELETAR
+            {reservasUser.length > 0 ? (
+              reservasUser.map((sala, index) => (
+                <Box key={index} style={styles.card}>
+                  <Typography variant="h5">Sala: {sala.classroom}</Typography>
+                  <Typography>
+                    Data de Início: {formatDate(sala.dateStart)}
                   </Typography>
+                  <Typography>
+                    Data de Término: {formatDate(sala.dateEnd)}
+                  </Typography>
+                  <Typography>
+                    Horário: {sala.timeStart} - {sala.timeEnd}
+                  </Typography>
+                  <Box style={styles.boxBotao}>
+                    <Button
+                      variant="contained"
+                      color="error"
+                      onClick={() => handleOpenModal(sala)}
+                    >
+                      DELETAR
+                    </Button>
+                  </Box>
                 </Box>
-              </Box>
-            ))}
+              ))
+            ) : (
+              <Typography variant="h5">Usuário sem reservas</Typography>
+            )}
           </Box>
           <Modal
             open={openModal}
@@ -126,37 +132,29 @@ function ReservasUser() {
                 Sala: {reservaSelecionada?.classroom}
               </Typography>
               <Box sx={{ display: "flex", gap: 2, marginTop: 2 }}>
-                <Typography
+                <Button
+                  variant="outlined"
                   onClick={() => {
                     deleteScheduleUser(reservaSelecionada.id);
                     handleCloseModal();
                   }}
                   sx={{
-                    cursor: "pointer",
-                    px: 3,
-                    py: 1,
-                    borderRadius: 2,
                     backgroundColor: "#215299",
-                    color: "#fff",
-                    fontWeight: "bold",
+                    color: "#ffffff",
+                    "&:hover": {
+                      backgroundColor: "#183b6b",
+                    },
                   }}
                 >
-                  Confirmar
-                </Typography>
-                <Typography
+                  CONFIRMAR
+                </Button>
+                <Button
+                  variant="contained"
+                  color="error"
                   onClick={handleCloseModal}
-                  sx={{
-                    cursor: "pointer",
-                    px: 3,
-                    py: 1,
-                    borderRadius: 2,
-                    backgroundColor: "#ff0002",
-                    color: "#fff",
-                    fontWeight: "bold",
-                  }}
                 >
-                  Cancelar
-                </Typography>
+                  CANCELAR
+                </Button>
               </Box>
             </Box>
           </Modal>

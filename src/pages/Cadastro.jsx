@@ -27,6 +27,7 @@ function Cadastro() {
     password: "",
     password2: "",
     showPassword: false,
+    showPassword2: false,
   });
 
   // Função para ativar a segurança da senha (showPassword)

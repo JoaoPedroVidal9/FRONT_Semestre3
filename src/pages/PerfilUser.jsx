@@ -50,51 +50,45 @@ function PerfilUser() {
   }
 
   useEffect(() => {
-    async function GetUserByCPF() {
-      try {
-        const cpf = localStorage.getItem("id_usuario");
-        await api.getUserById(cpf).then(
-          (response) => {
-            const userData = response.data.user;
-            setPerfilUser((user) => ({
-              ...user,
-              cpf: userData.cpf,
-              email: userData.email,
-              name: userData.name,
-            }));
-          },
-          (error) => {
-            alert(error.response.data.error);
-          }
-        );
-      } catch (error) {
-        console.log("Erro", error);
-      }
-    }
-
-    async function getScheduleByUserID() {
-      try {
-        const cpf = localStorage.getItem("id_usuario");
-        await api.getUserSchedules(cpf).then(
-          (response) => {
-            const numeroReservas = response.data.contagem;
-            setPerfilUser((user) => ({
-              ...user,
-              contagem: String(numeroReservas),
-            }));
-          },
-          (error) => {
-            console.log(error.response.data.error);
-          }
-        );
-      } catch (error) {
-        console.log("Erro", error);
-      }
-    }
-
     GetUserByCPF();
     getScheduleByUserID();
   }, []);
+
+  async function GetUserByCPF() {
+    try {
+      const cpf = localStorage.getItem("id_usuario");
+      await api.getUserById(cpf).then(
+        (response) => {
+          const userData = response.data.user;
+          setPerfilUser((user) => ({
+            ...user,
+            cpf: userData.cpf,
+            email: userData.email,
+            name: userData.name,
+          }));
+        },
+        (error) => {
+          alert(error.response.data.error);
+        }
+      );
+    } catch (error) {
+      console.log("Erro", error);
+    }
+  }
+
+  async function getScheduleByUserID() {
+    try {
+      const cpf = localStorage.getItem("id_usuario");
+      const response = await api.getUserSchedules(cpf)
+      const numeroReservas = response.data.contagem;
+      setPerfilUser((user) => ({
+        ...user,
+        contagem: String(numeroReservas),
+      }));
+    } catch (error) {
+      console.log("Erro", error);
+    }
+  }
 
   async function update() {
     const cpf = localStorage.getItem("id_usuario");

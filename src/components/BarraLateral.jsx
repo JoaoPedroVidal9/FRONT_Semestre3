@@ -9,6 +9,7 @@ import GroupIcon from "@mui/icons-material/Group";
 import SearchIcon from '@mui/icons-material/Search';
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import ReorderIcon from '@mui/icons-material/Reorder';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const BarraLateral = () => {
 
@@ -52,9 +53,6 @@ const BarraLateral = () => {
         position: "fixed",
       }}
     >
-        <IconButton>
-            <ReorderIcon sx={{ width: 40, height: 40, color:"#000000" }} />
-        </IconButton>
       <IconButton sx={{ backgroundColor: "#ff0002" }}>
         <CalendarTodayIcon sx={{ width: 40, height: 40, color:"#ffffff" }} onClick={reserva}/>
       </IconButton>
@@ -65,14 +63,14 @@ const BarraLateral = () => {
         <GroupIcon sx={{ width: 40, height: 40, color:"#ffffff" }} onClick={quemSomos}/>
       </IconButton>
       <IconButton sx={{ backgroundColor: "#ff0002" }}>
-        <SettingsIcon sx={{ width: 40, height: 40, color:"#ffffff" }} onClick={PerfilUser}/>
+        <PersonIcon sx={{ width: 40, height: 40, color:"#ffffff" }} onClick={PerfilUser}/>
       </IconButton>
       <IconButton sx={{ backgroundColor: "#ff0002" }}>
         <FormatListBulletedIcon sx={{ width: 40, height: 40, color:"#ffffff" }} onClick={salas}/>
       </IconButton>
 
       <IconButton sx={{ backgroundColor: "#ff0002", marginTop:"200%" }}>
-        <PersonIcon sx={{ width: 40, height: 40, color:"#ffffff" }} onClick={logout} />
+        <LogoutIcon sx={{ width: 30, height: 40, color:"#ffffff" }} onClick={logout} />
       </IconButton>
     </Box>
   );

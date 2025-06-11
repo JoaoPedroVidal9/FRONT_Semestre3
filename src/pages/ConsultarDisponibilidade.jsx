@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
@@ -8,7 +8,11 @@ import Typography from "@mui/material/Typography";
 import api from "../axios/axios";
 import senai from "../assets/logo_senai.png";
 import BarraLateral from "../components/BarraLateral";
-import ResultadoModal from "../components/ResultadoModal"
+import ResultadoModal from "../components/ResultadoModal";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 
 function ConsultarDisponibilidade() {
   const [week, setWeek] = useState({
@@ -16,9 +20,34 @@ function ConsultarDisponibilidade() {
     weekEnd: "",
     classroomID: "",
   });
-
   const [openModal, setOpenModal] = useState(false);
   const [modalContent, setModalContent] = useState("");
+  const [listClassroom, setListClassroom] = useState([]);
+
+  useEffect(() => {
+    getAllClassrooms();
+  }, []);
+
+  async function getAllClassrooms() {
+    try {
+      const response = await api.getSalas();
+      setListClassroom(response.data.classrooms.map((sala) => sala.number));
+    } catch (error) {
+      console.log("Erro", error);
+      alert(error.response.data.error);
+    }
+  }
+
+  async function getSchedulePorSemana() {
+    try {
+      const response = await api.getScheduleByWeek(week);
+      setModalContent(response.data.available);
+      handleOpenModal();
+    } catch (error) {
+      setModalContent(error.response.data.error);
+      handleOpenModal();
+    }
+  }
 
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
@@ -33,112 +62,132 @@ function ConsultarDisponibilidade() {
     getSchedulePorSemana();
   };
 
-  async function getSchedulePorSemana() {
-    try {
-      const response = await api.getScheduleByWeek(week);
-      setModalContent(response.data.available);
-      handleOpenModal();
-    } catch (error) {
-      setModalContent(error.response.data.error);
-      handleOpenModal();
-    }
-  }
+  const getTodayDate = () => {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, "0");
+    const dd = String(today.getDate()).padStart(2, "0");
+    return `${yyyy}-${mm}-${dd}`;
+  };
 
   return (
-    <Container component="main" maxWidth="xl">
+    <>
       <BarraLateral />
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          minHeight: "100vh",
-        }}
-      >
+      <Container component="main" maxWidth="xl">
         <Box
-          component="form"
-          onSubmit={handleSubmit}
-          noValidate
           sx={{
             display: "flex",
-            flexDirection: "column",
+            justifyContent: "center",
             alignItems: "center",
-            padding: "1%",
+            minHeight: "100vh",
           }}
         >
-          <img
-            style={{ width: "300px" }}
-            src={senai}
-            alt="Logo Senai"
-          />
-
-          <Typography
-            sx={{ marginTop: 1, fontSize: 20 }}
-            component="h1"
-            textAlign="center"
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            noValidate
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              padding: "1%",
+            }}
           >
-            Consultar Disponibilidade
-          </Typography>
+            <img style={{ width: "300px" }} src={senai} alt="Logo Senai" />
 
-          <TextField
-            required
-            fullWidth
-            margin="dense"
-            label="Data de Início"
-            name="weekStart"
-            type="date"
-            value={week.weekStart}
-            onChange={onChange}
-            variant="outlined"
-            size="small"
-            slotProps={{ inputLabel: { shrink: true } }}
-            sx={{ width: 500 }}
-          />
+            <Typography
+              sx={{ marginTop: 1, fontSize: 20 }}
+              component="h1"
+              textAlign="center"
+            >
+              Consultar Disponibilidade
+            </Typography>
 
-          <TextField
-            required
-            fullWidth
-            margin="dense"
-            label="Data de Fim"
-            name="weekEnd"
-            type="date"
-            value={week.weekEnd}
-            onChange={onChange}
-            size="small"
-            slotProps={{ inputLabel: { shrink: true } }}
-            sx={{ width: 500 }}
-          />
+            <TextField
+              required
+              fullWidth
+              margin="dense"
+              label="Data de Início"
+              name="weekStart"
+              type="date"
+              value={week.weekStart}
+              onChange={onChange}
+              variant="outlined"
+              size="small"
+              slotProps={{ inputLabel: { shrink: true } }}
+              inputProps={{ min: getTodayDate() }}
+              sx={{ width: 500 }}
+            />
 
-          <TextField
-            required
-            fullWidth
-            margin="dense"
-            label="Número da Sala"
-            name="classroomID"
-            value={week.classroomID}
-            onChange={onChange}
-            size="small"
-            slotProps={{ inputLabel: { shrink: true } }}
-            sx={{ width: 500 }}
-          />
+            <TextField
+              required
+              fullWidth
+              margin="dense"
+              label="Data de Fim"
+              name="weekEnd"
+              type="date"
+              value={week.weekEnd}
+              onChange={onChange}
+              size="small"
+              slotProps={{ inputLabel: { shrink: true } }}
+              inputProps={{ min: getTodayDate() }}
+              sx={{ width: 500 }}
+            />
 
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ width: "40%", marginTop: "12px", backgroundColor: "gray" }}
-          >
-            Consultar
-          </Button>
+            <FormControl fullWidth variant="outlined" margin="dense">
+              <InputLabel id="classroom-label" shrink={true}>
+                Número da sala
+              </InputLabel>
+
+              <Select
+                labelId="classroom-label"
+                id="classroomID"
+                value={week.classroomID}
+                size="small"
+                label="Número da sala"
+                onChange={(e) =>
+                  setWeek((prev) => ({ ...prev, classroomID: e.target.value }))
+                }
+                MenuProps={{
+                  PaperProps: {
+                    style: {
+                      maxHeight: 300, // define a altura máxima do dropdown
+                    },
+                  },
+                }}
+                displayEmpty
+                sx={{ width: 500 }}
+              >
+                {listClassroom.map((numero) => (
+                  <MenuItem key={numero} value={numero}>
+                    {numero}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{
+                width: "40%",
+                marginTop: "12px",
+                backgroundColor: "#215299",
+              }}
+            >
+              Consultar
+            </Button>
+          </Box>
         </Box>
-      </Box>
 
-      <ResultadoModal
-        open={openModal}
-        handleClose={handleCloseModal}
-        content={modalContent}
-      />
-    </Container>
+        <ResultadoModal
+          open={openModal}
+          handleClose={handleCloseModal}
+          content={modalContent}
+        />
+      </Container>
+    </>
   );
 }
 

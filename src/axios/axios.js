@@ -19,7 +19,7 @@ api.interceptors.request.use(
 )
 
 const sheets = {
-    getSalas:()=>api.get("classroom"),
+    getSalas:()=> api.get("classroom"),
     postLogin:(user) => api.post("user/login", user),
     postCadastro:(user) => api.post("user",user),
     deleteUser: (userID) => api.delete(`user/${userID}`),
@@ -28,7 +28,8 @@ const sheets = {
     postReserva:(sala) => api.post("schedule",sala),
     getScheduleByWeek:(week) => api.post("schedule/available/",week),
     getUserSchedules: (userID) => api.get(`schedule/user/${userID}`),
-    deleteSchedule: (idSchedule) => api.delete(`schedule/${idSchedule}`)
+    deleteSchedule: (idSchedule) => api.delete(`schedule/${idSchedule}`),
+    postDaysWeekSchedule: (daysDate) => api.post(`schedule/days`, daysDate)
     
 }
 
