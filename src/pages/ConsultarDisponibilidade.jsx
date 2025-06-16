@@ -100,7 +100,7 @@ function ConsultarDisponibilidade() {
               component="h1"
               textAlign="center"
             >
-              Consultar Disponibilidade
+              Consultar disponibilidade de um sala por semana
             </Typography>
 
             <TextField
