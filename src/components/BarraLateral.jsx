@@ -1,14 +1,11 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
-import SettingsIcon from "@mui/icons-material/Settings";
 import PersonIcon from "@mui/icons-material/Person";
 import GroupIcon from "@mui/icons-material/Group";
 import SearchIcon from '@mui/icons-material/Search';
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
-import ReorderIcon from '@mui/icons-material/Reorder';
 import LogoutIcon from '@mui/icons-material/Logout';
 
 const BarraLateral = () => {
@@ -17,8 +14,8 @@ const BarraLateral = () => {
 
     function logout(){
         localStorage.removeItem('authenticated');
-        localStorage.removeItem('authorization');
         localStorage.removeItem('id_usuario');
+        localStorage.removeItem('token');
         navigate('/');
       }
 
